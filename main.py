@@ -1,7 +1,9 @@
 import time
 from rich import print
 import os
+import platform
 
+PLATFORM_NAME = platform.system()
 RESTARTED = False
 commands = {"shutdown": "Shutdowns operating system",
             "restart": "Restarts operating system",
@@ -37,19 +39,30 @@ def start():
             time.sleep(5)
             print("[bold red]System is restarting...")
             time.sleep(1)
-            os.system("cls")
+
+            if PLATFORM_NAME == "Windows":
+                os.system("cls")
+            elif PLATFORM_NAME == "Linux" or PLATFORM_NAME == "Darwin":
+                os.system("clear")
             RESTARTED = True
             break
 
         elif command == "help":
             for key in commands.keys():
-                print("[bold blue]" + key + "[/bold blue]" + " --- " + commands[key])
+                print("  [bold blue]" + key + "[/bold blue]" + " --- " + commands[key])
 
         elif command == "time":
-            print("[bold #d78700]Local time: [/bold #d78700]" + time.ctime(time.time()))
+            print("  [bold #d78700]Local time: [/bold #d78700]" + time.ctime(time.time()))
 
         elif command == "ps":
-            os.system("tasklist")
+            if PLATFORM_NAME == "Windows":
+                os.system("tasklist")
+
+            elif PLATFORM_NAME == "Linux" or PLATFORM_NAME == "Darwin":
+                os.system("ps aux")
+
+        elif command == "" or command == " ":
+            pass
 
         else:
             print(f"[bold red]Incorrect command: {command}")
