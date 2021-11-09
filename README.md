@@ -1,3 +1,3 @@
 # Laboratory Work 1
-###OS Simulation
+### OS Simulation
 For some information about commands enter command ```help```
